@@ -4,21 +4,21 @@
 }
 
 :root {
-  --bg: #eef3f8;
-  --paper: #ffffff;
-  --text: #13263c;
-  --muted: #60718a;
-  --text-light: #eef7ff;
-  --text-soft: #a9bbd6;
-  --line: #d8e4ef;
-  --blue: #143d7a;
-  --blue-2: #133659;
-  --deep: #07182e;
-  --cyan: #8ffaff;
-  --green: #18dca9;
-  --green2: #75f5c9;
-  --gray: #eaf1f7;
-  --shadow: rgba(1, 30, 58, 0.2);
+  --bg: #F1F5F9;
+  --paper: #FFFFFF;
+  --text: #0F172A;
+  --muted: #475569;
+  --text-light: #F1F5F9;
+  --text-soft: #CBD5E1;
+  --line: #CBD5E1;
+  --blue: #2563EB;
+  --blue-2: #0F172A;
+  --deep: #0F172A;
+  --cyan: #06B6DA;
+  --green: #22C55E;
+  --green2: #22C55E;
+  --gray: #F1F5F9;
+  --shadow: rgba(15, 23, 42, 0.35);
   --font: 'Inter', 'Rajdhani', Arial, sans-serif;
 }
 
@@ -82,6 +82,17 @@ body::before {
   color: var(--text-light);
   text-decoration: none;
   min-width: 180px;
+}
+
+.logo-image {
+  width: 210px;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 0 12px rgba(143, 250, 255, 0.55));
+}
+
+.logo-image-small {
+  width: 160px;
 }
 
 .brand-mark {
@@ -214,7 +225,7 @@ body::before {
 
 .hero-section {
   background:
-    linear-gradient(90deg, rgba(4, 19, 37, 0.90), rgba(7, 23, 44, 0.86)),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.95), rgba(37, 99, 235, 0.88)),
     url('https://images.unsplash.com/photo-1552664730-cfec5f28eb13?auto=format&w=1800&q=80') center/cover;
   color: var(--text-light);
   min-height: 460px;
@@ -533,6 +544,20 @@ body::before {
   box-shadow: 0 15px 24px var(--shadow);
   position: relative;
   overflow: hidden;
+}
+
+.service-card::after {
+  content: "";
+  position: absolute;
+  right: -40px;
+  top: -30px;
+  width: 120px;
+  height: 120px;
+  background-image: url('assets/logo-vejah.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.08;
+  transform: rotate(20deg);
 }
 
 .service-card::before {
