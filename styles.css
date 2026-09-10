@@ -86,7 +86,7 @@ body::before {
 
 .logo-image {
   width: 210px;
-  height: 105px;
+  height: auto;
   display: block;
   filter: drop-shadow(0 0 12px rgba(143, 250, 255, 0.55));
 }
