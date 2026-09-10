@@ -4,6 +4,28 @@ document.addEventListener('DOMContentLoaded', function () {
   const menuToggle = document.querySelector('.menu-toggle');
   const mainMenu = document.querySelector('.main-menu');
 
+  function smoothScrollTo(target) {
+    const startY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
+    const targetY = target.getBoundingClientRect().top + startY - 82;
+    const distance = targetY - startY;
+    const duration = 720;
+    const start = performance.now();
+
+    function animate(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+
+      window.scrollTo(0, startY + distance * eased);
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    }
+
+    requestAnimationFrame(animate);
+  }
+
   if (menuToggle && mainMenu) {
     menuToggle.addEventListener('click', function () {
       const isOpen = mainMenu.classList.toggle('open');
@@ -20,10 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const target = targetId ? document.querySelector(targetId) : null;
 
       if (target) {
-        target.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
+        smoothScrollTo(target);
       }
 
       menuLinks.forEach((item) => item.classList.toggle('active', item === link));
