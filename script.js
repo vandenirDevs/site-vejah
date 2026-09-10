@@ -13,7 +13,19 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   menuLinks.forEach((link) => {
-    link.addEventListener('click', function () {
+    link.addEventListener('click', function (event) {
+      event.preventDefault();
+
+      const targetId = link.getAttribute('href');
+      const target = targetId ? document.querySelector(targetId) : null;
+
+      if (target) {
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+
       menuLinks.forEach((item) => item.classList.toggle('active', item === link));
 
       if (mainMenu && mainMenu.classList.contains('open')) {

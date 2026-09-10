@@ -1144,24 +1144,31 @@ code {
     left: 0;
     right: 0;
     z-index: 80;
-    display: none;
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 20px;
     padding: 20px 14px;
-    background: var(--deep);
+    background: rgba(7, 24, 46, 0.95);
     box-shadow: 0 8px 30px var(--shadow);
+    transform: translateX(-120%);
+    opacity: 0;
+    visibility: hidden;
+    transition: transform 0.35s ease, opacity 0.35s ease, visibility 0.35s ease;
   }
 
   .main-menu.open {
-    display: flex;
+    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
   }
 
   .main-menu a {
     width: 100%;
     text-align: center;
     padding: 12px 0;
+    color: var(--text-light);
   }
 
   .main-menu a::after {
