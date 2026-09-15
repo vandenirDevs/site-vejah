@@ -224,16 +224,32 @@ body::before {
 }
 
 .hero-section {
-  background:
-    linear-gradient(90deg, rgba(15, 23, 42, 0.95), rgba(37, 99, 235, 0.88)),
-    url('https://images.unsplash.com/photo-1552664730-cfec5f28eb13?auto=format&w=1800&q=80') center/cover;
+  position: relative;
   color: var(--text-light);
   min-height: 460px;
   display: flex;
   align-items: center;
+  overflow: hidden;
+  background-image: url('assets/imagem-inicio.png');
+  background-size: cover;
+  background-position: center right;
+  background-repeat: no-repeat;
+  isolation: isolate;
+}
+
+.hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.78) 55%, rgba(0, 0, 0, 0.22) 100%);
+  opacity: 0.94;
+  transition: opacity 800ms ease, background-position 900ms ease;
+  z-index: 0;
 }
 
 .hero-grid {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: 1fr 0.95fr;
   gap: 50px;
@@ -253,6 +269,11 @@ body::before {
   text-transform: uppercase;
   font-weight: 800;
 }
+
+.hero-content h1 span {
+  color: var(--cyan);
+}
+
 
 .section-kicker.dark {
   color: var(--blue);
