@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const serviceCards = Array.from(document.querySelectorAll('.service-card'));
   const menuToggle = document.querySelector('.menu-toggle');
   const mainMenu = document.querySelector('.main-menu');
+  const sections = Array.from(document.querySelectorAll('main section[id]'));
 
   function smoothScrollTo(target) {
     const startY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
@@ -26,6 +27,17 @@ document.addEventListener('DOMContentLoaded', function () {
     requestAnimationFrame(animate);
   }
 
+  function setActiveLink(link) {
+    menuLinks.forEach((item) => item.classList.toggle('active', item === link));
+  }
+
+  function activateFromSection(sectionId) {
+    const targetLink = menuLinks.find((link) => link.getAttribute('href') === `#${sectionId}`);
+    if (targetLink) {
+      setActiveLink(targetLink);
+    }
+  }
+
   if (menuToggle && mainMenu) {
     menuToggle.addEventListener('click', function () {
       const isOpen = mainMenu.classList.toggle('open');
@@ -45,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
         smoothScrollTo(target);
       }
 
-      menuLinks.forEach((item) => item.classList.toggle('active', item === link));
+      setActiveLink(link);
 
       if (mainMenu && mainMenu.classList.contains('open')) {
         mainMenu.classList.remove('open');
@@ -57,6 +69,47 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   });
+
+  if ('IntersectionObserver' in window && sections.length) {
+    const observer = new IntersectionObserver((entries) => {
+      const visibleSections = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+      if (visibleSections.length > 0) {
+        activateFromSection(visibleSections[0].target.id);
+      }
+    }, {
+      root: null,
+      rootMargin: '0px 0px -65% 0px',
+      threshold: [0.2, 0.45, 0.7]
+    });
+
+    sections.forEach((section) => observer.observe(section));
+  } else {
+    const sectionTopOffsets = sections.map((section) => ({
+      id: section.id,
+      offset: section.offsetTop
+    }));
+
+    function updateActiveByScroll() {
+      const currentScroll = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
+      let currentSection = sections[0];
+
+      sectionTopOffsets.forEach((item) => {
+        if (currentScroll >= item.offset - 150) {
+          currentSection = document.getElementById(item.id) || currentSection;
+        }
+      });
+
+      if (currentSection) {
+        activateFromSection(currentSection.id);
+      }
+    }
+
+    updateActiveByScroll();
+    window.addEventListener('scroll', updateActiveByScroll);
+  }
 
   serviceCards.forEach((card, index) => {
     card.style.animation = 'riseIn 700ms ease ' + (index * 80) + 'ms both';
